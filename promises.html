@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Best jokes ever</title>
+  <!-- <script src="promises.js" ></script> -->
+  </head>
+  <body>
+    <h1>Get ready for a great joke!</h1>
+    <!-- <h2 id="jokeContainer"></h2> -->
+    <ul></ul>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" 
+    crossorigin="anonymous">
+    "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
+    </script>
+
+    <script>
+      const appendJoke = joke => {
+        let ul = document.querySelector('ul');
+        let li = document.createElement('li');
+
+        li.innerHTML = joke;
+        ul.appendChild(li)
+      }
+      // Callback Hell
+      // 
+      //   $.getJSON(
+      //     'https://icanhazdadjoke.com/search?terms=work', 
+      //     data => { 
+      //       appendJoke(data.results[1].joke);
+      //       $.getJSON(
+      //       'https://icanhazdadjoke.com/search?terms=work',
+      //       data => {
+      //         appendJoke(data.results[2].joke)
+      //         $.getJSON(
+      //         'https://icanhazdadjoke.com/search?terms=work',
+      //           data => {
+      //             appendJoke(data.results[3].joke)
+      //           }
+      //         );
+      //       }
+      //     );
+      //   }
+      // );
+
+      // Callback menos hell
+      // const getJoke = (term, callback) => 
+      //   $.getJSON(
+      //     `https://icanhazdadjoke.com/search?terms=${term}`,
+      //       data => {
+      //         appendJoke(data.results[0].joke);
+      //         if (callback) callback();
+      //       }
+      //     );
+      
+
+      // getJoke('work',
+      //   () => getJoke('wolf',
+      //     () => getJoke('ant')
+      //   )
+      // );
+
+      // Promisses
+
+      const getJoke = (term) => 
+        new Promise((resolve, reject) => 
+          $.getJSON(
+            `https://icanhazdadjoke.com/search?terms=${term}`,
+              data => {
+                if (term === 'pizza') reject('erro')
+                else {
+                  appendJoke(data.results[0].joke);
+                  resolve();
+                }
+              },
+              reject
+            )
+          );
+
+      getJoke('work')
+        .then(() => getJoke('work'))
+        .then(() => getJoke('pizza'))
+        .catch(error => console.log(error))
+      
+               
+    </script>
+
+  </body>
+</html>
+        
