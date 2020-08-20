@@ -91,3 +91,13 @@ const formatedBookNames = () => {
 formatedBookNames()
 
 assert.deepEqual(formatedBookNames(), expected_result);
+
+const filtraBook = () => {
+
+  const filtro = books.filter(e => e.releaseYear < 1960).map(a => a.name)
+
+  console.log(filtro);
+
+}
+
+filtraBook()
